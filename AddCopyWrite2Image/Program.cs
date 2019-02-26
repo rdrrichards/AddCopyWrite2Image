@@ -23,9 +23,9 @@ namespace AddCopyright2Image
         {
             if (args.Length > 0)
             {
-                Dictionary<string, string> clArgValues = new Dictionary<string, string>();
-                clArgValues = parseArgs(args);
-                validateArgs(clArgValues);
+                var clArgValues = new Dictionary<string, string>();
+                clArgValues = ParseArgs(args);
+                ValidateArgs(clArgValues);
 
                 foreach (var pair in clArgValues)
                 {
@@ -34,9 +34,9 @@ namespace AddCopyright2Image
             }
             else
             {
-                Dictionary<string, string> clArgValues = new Dictionary<string, string>();
-                clArgValues = parseArgs(args);
-                validateArgs(clArgValues);
+                var clArgValues = new Dictionary<string, string>();
+                clArgValues = ParseArgs(args);
+                ValidateArgs(clArgValues);
             }
 
             string curPath = Directory.GetCurrentDirectory();
@@ -46,8 +46,8 @@ namespace AddCopyright2Image
 
             if (!bitmapPath.Contains(@"*"))
             {
-                Bitmap temp = (Bitmap)Bitmap.FromFile(bitmapPath);
-                Bitmap bmap = (Bitmap)temp.Clone();
+                var temp = (Bitmap)Image.FromFile(bitmapPath);
+                var bmap = (Bitmap)temp.Clone();
                 InsertText(bmap);
                 SaveBitmap((Bitmap)bmap.Clone(), bitmapPath);
             }
@@ -60,8 +60,8 @@ namespace AddCopyright2Image
                 foreach (string file in files)
                 {
                     Console.WriteLine("Working file: " + file);
-                    Bitmap temp = (Bitmap)Bitmap.FromFile(file);
-                    Bitmap bmap = (Bitmap)temp.Clone();
+                    var temp = (Bitmap)Image.FromFile(file);
+                    var bmap = (Bitmap)temp.Clone();
                     InsertText(bmap);
                     SaveBitmap((Bitmap)bmap.Clone(), file);
                 }
@@ -69,9 +69,9 @@ namespace AddCopyright2Image
 
         }
 
-        static Dictionary<string, string> parseArgs(string[] clArgs)
+        static Dictionary<string, string> ParseArgs(string[] clArgs)
         {
-            Dictionary<string, string> clArgValues = new Dictionary<string, string>();
+            var clArgValues = new Dictionary<string, string>();
 
             for (int i = 0; i < clArgs.Length; i += 2)
             {
@@ -81,7 +81,7 @@ namespace AddCopyright2Image
             return clArgValues;
         }
 
-        static void validateArgs(Dictionary<string, string> argDict)
+        static void ValidateArgs(Dictionary<string, string> argDict)
         {
             //static string bitmapPath; // -i
             if (!argDict.ContainsKey("-i"))
@@ -222,7 +222,7 @@ namespace AddCopyright2Image
 
         private static void InsertText(Bitmap bmap)
         {
-            Graphics gr = Graphics.FromImage(bmap);
+            var gr = Graphics.FromImage(bmap);
 
             if (string.IsNullOrEmpty(fontName))
                 fontName = "Times New Roman";
@@ -230,7 +230,7 @@ namespace AddCopyright2Image
             if (fontSize.Equals(null))
                 fontSize = 10.0F;
 
-            Font font = new Font(fontName, fontSize);
+            var font = new Font(fontName, fontSize);
 
             if (!string.IsNullOrEmpty(fontStyle))
             {
@@ -260,13 +260,13 @@ namespace AddCopyright2Image
             if (string.IsNullOrEmpty(colorName2))
                 colorName2 = colorName1;
 
-            Color color1 = Color.FromName(colorName1);
-            Color color2 = Color.FromName(colorName2);
+            var color1 = Color.FromName(colorName1);
+            var color2 = Color.FromName(colorName2);
 
             int gW = (int)(text.Length * fontSize);
             gW = gW == 0 ? 10 : gW;
 
-            LinearGradientBrush LGBrush = new LinearGradientBrush(new Rectangle(0, 0, gW, (int)fontSize), color1, color2, LinearGradientMode.Vertical);
+            var LGBrush = new LinearGradientBrush(new Rectangle(0, 0, gW, (int)fontSize), color1, color2, LinearGradientMode.Vertical);
             gr.DrawString(text, font, LGBrush, xPosition, yPosition);
         }
 
@@ -275,8 +275,8 @@ namespace AddCopyright2Image
             bitmapPath = saveFilePath;
             if (flgBackup == "N")
             {
-                if (System.IO.File.Exists(saveFilePath))
-                    System.IO.File.Delete(saveFilePath);
+                if (File.Exists(saveFilePath))
+                    File.Delete(saveFilePath);
             }
             else
             {
@@ -301,10 +301,10 @@ namespace AddCopyright2Image
                 
                 //saveFilePath.Substring(0, saveFilePath.Length - 4) + "_Copyright" + saveFilePath.Substring(saveFilePath.Length - 4, 4);
                 Console.WriteLine("Saving udpated file to: " + saveFilePath);
-                if (System.IO.File.Exists(saveFilePath))
+                if (File.Exists(saveFilePath))
                 {
                     //System.IO.File.Copy(saveFilePath, saveFilePath);
-                    System.IO.File.Delete(saveFilePath);
+                    File.Delete(saveFilePath);
                 }
             }
             bmpBitmap.Save(saveFilePath);
