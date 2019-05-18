@@ -23,8 +23,7 @@ namespace AddCopyright2Image
         {
             if (args.Length > 0)
             {
-                var clArgValues = new Dictionary<string, string>();
-                clArgValues = ParseArgs(args);
+                var clArgValues = ParseArgs(args);
                 ValidateArgs(clArgValues);
 
                 foreach (var pair in clArgValues)
@@ -34,15 +33,11 @@ namespace AddCopyright2Image
             }
             else
             {
-                var clArgValues = new Dictionary<string, string>();
-                clArgValues = ParseArgs(args);
+                var clArgValues = ParseArgs(args);
                 ValidateArgs(clArgValues);
             }
 
             string curPath = Directory.GetCurrentDirectory();
-            //Console.WriteLine(curPath); // + "\\" + bitmapPath);
-            //Console.WriteLine(bitmapPath);
-            //Console.WriteLine(bitmapPath.Contains(@"*").ToString());
 
             if (!bitmapPath.Contains(@"*"))
             {
@@ -53,9 +48,6 @@ namespace AddCopyright2Image
             }
             else
             {
-                //string curPath = Directory.GetCurrentDirectory();
-                //Console.WriteLine(curPath + "\\" + bitmapPath);
-
                 string[] files = Directory.GetFiles(curPath, bitmapPath);
                 foreach (string file in files)
                 {
@@ -195,16 +187,6 @@ namespace AddCopyright2Image
 
         private static void ShowHelp()
         {
-            //static string bitmapPath; // -i
-            //static string text; // -c
-            //static int xPosition; // -x
-            //static int yPosition; // -y
-            //static string fontName; // -n
-            //static float fontSize; // -s
-            //static string fontStyle; // -t
-            //static string colorName1; // -c1
-            //static string colorName2; // -c2
-
             Console.WriteLine("AddCopyright2Image");
             Console.WriteLine("Valid arguments are:");
             Console.WriteLine("     -i - image path");
@@ -283,9 +265,6 @@ namespace AddCopyright2Image
                 string curPath = Directory.GetCurrentDirectory();
                 string buPath = "Copyrighted";
                 int pathIndex = saveFilePath.LastIndexOf("\\");
-
-                //Console.WriteLine(saveFilePath);
-                //Console.WriteLine(pathIndex);
 
                 if (!Directory.Exists(curPath + "\\" + buPath))
                     Directory.CreateDirectory(curPath + "\\" + buPath);
